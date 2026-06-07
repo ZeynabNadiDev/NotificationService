@@ -17,5 +17,7 @@ namespace Notification.Domain.Interfaces.Repository
         Task<List<NotificationTemplate>> GetAllAsync();
         Task AddAsync(NotificationTemplate template);
         Task UpdateAsync(NotificationTemplate template);
+        Task DeleteAsync(NotificationTemplate template);
     }
 }
+
