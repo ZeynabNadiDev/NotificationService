@@ -9,8 +9,8 @@ namespace Notification.Domain.Entities
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public Guid TemplateId { get; set; }// Foreign Key to the template used for this notification
-        public virtual NotificationTemplate Template { get; set; }
+        public Guid? TemplateId { get; set; }// Foreign Key to the template used for this notification
+        public virtual NotificationTemplate? Template { get; set; }
         public string Title { get; set; } // Final rendered subject/title after replacing placeholders
         public string Message { get; set; } // Final rendered message content after replacing placeholders
         public NotificationChannel Channel { get; set; }

@@ -21,7 +21,7 @@ namespace Notification.Domain.Interfaces.Repository
 
         // Requirement 3.5: Mark ALL notifications of a user as read
         Task MarkAllAsReadAsync(Guid userId, DateTime readAt);
-
+        Task MarkUserNotificationAsReadAsync(Guid userId, DateTime readAt);
 
 
     }
