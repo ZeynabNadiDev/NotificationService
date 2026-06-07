@@ -45,5 +45,11 @@ namespace Notification.Infrastructure.Repository
             _context.NotificationTemplates.Update(template);
             return Task.CompletedTask;
         }
+
+        public async Task DeleteAsync(NotificationTemplate template)
+        {
+            _context.NotificationTemplates.Remove(template);
+            await Task.CompletedTask;
+        }
     }
 }
