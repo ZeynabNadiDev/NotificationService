@@ -12,7 +12,7 @@ namespace Notification.Application.Services.Impliments
             var rendered = template;
             foreach (var (key, value) in values)
             {
-                rendered = rendered.Replace($"{{{key}}}", value ?? string.Empty);
+                rendered = rendered.Replace($"{{{key}}}", value ?? string.Empty, StringComparison.OrdinalIgnoreCase);
             }
 
             return rendered;

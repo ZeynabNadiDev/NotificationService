@@ -7,6 +7,8 @@ using Notification.Domain.Interfaces.Unit_of_work;
 using Notification.Infrastructure.NotificationContext;
 using Notification.Infrastructure.Repositories;
 using Notification.Infrastructure.Repository;
+using Notification.Infrastructure.Consumers;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,23 @@ builder.Services.AddDbContext<NotificationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
+// MassTransit configuration
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<NotificationCreatedConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
 
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationTemplateRepository, NotificationTemplateRepository>();

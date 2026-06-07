@@ -1,4 +1,6 @@
-﻿using Notification.Application.DTOs;
+﻿using MassTransit;
+using Notification.Application.DTOs;
+using Notification.Application.Events;
 using Notification.Application.Services.Interfaces;
 using Notification.Domain.Entities;
 using Notification.Domain.Enums;
@@ -11,11 +13,12 @@ namespace Notification.Application.Services.Impliments
     {
         private readonly IUnitOfWork _uow;
         private readonly ITemplateEngine _templateEngine;
-
-        public NotificationService(IUnitOfWork uow, ITemplateEngine templateEngine)
+        private readonly IPublishEndpoint _publishEndpoint;
+        public NotificationService(IUnitOfWork uow, ITemplateEngine templateEngine, IPublishEndpoint publishEndpoint)
         {
             _uow = uow;
             _templateEngine = templateEngine;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<Guid> SendNotificationAsync(SendNotificationRequest request)
@@ -56,6 +59,18 @@ namespace Notification.Application.Services.Impliments
 
             await _uow.UserNotifications.AddAsync(notification);
             await _uow.SaveChangesAsync();
+
+            await _publishEndpoint.Publish(new NotificationCreatedEvent
+            {
+                NotificationId = notification.Id,
+                UserId = notification.UserId,
+                Title = notification.Title,
+                Message = notification.Message,
+                Channel = notification.Channel.ToString(), 
+                Type = notification.Type.ToString(),
+                CreatedAt = notification.CreatedAt
+            });
+
 
             return notification.Id;
         }
