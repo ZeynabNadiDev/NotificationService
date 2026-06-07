@@ -66,71 +66,63 @@ Exposes REST endpoints for interacting with the system.
 
 A direct notification sent to a specific user.
 
-Example:
-```json
-{
-  "userId": "123",
-  "title": "Account Created",
-  "message": "Your account has been successfully created."
-}
 🚀 Notification Service – .NET | Clean Architecture | RabbitMQ
 
 I recently built a scalable Notification Service using .NET, designed with Clean Architecture principles and asynchronous messaging via RabbitMQ.
 
-The goal was to create a flexible system capable of handling both direct notifications and template-based notifications, while keeping the architecture modular and maintainable.
+The goal was to create a flexible system capable of handling both direct notifications and template-based notifications while keeping the architecture modular and maintainable.
 
 🔹 Key Features
 
-• Simple notifications with custom title and message
-
-• Template-based notifications with dynamic parameters
-
-• Full template management (Create, Update, Delete, Retrieve)
-
-• Mark notifications as read (all or per user)
-
-• SQL Server persistence using Entity Framework Core
-
-• Repository Pattern implementation
-
-• RabbitMQ-based message processing
+• Simple notifications with custom title and message  
+• Template-based notifications with dynamic parameters  
+• Full template management (Create, Update, Delete, Retrieve)  
+• Mark notifications as read (all or per user)  
+• SQL Server persistence using Entity Framework Core  
+• Repository Pattern implementation  
+• RabbitMQ-based message processing  
 
 🔹 Architecture
 
 The service follows a Clean Architecture structure:
 
-Domain (Entities & Contracts)
-Application (Business Logic & Use Cases)
-Infrastructure (Database, RabbitMQ, Repositories)
-API Layer (REST Endpoints)
-🔹 Technology Stack
+Domain Layer  
+Contains the core business entities and contracts  
+Entities, Enums, Value Objects, Repository Interfaces
 
-• .NET 8
+Application Layer  
+Contains application business logic and use cases  
+DTOs, Services, Interfaces, Use Cases, Validation
 
-• ASP.NET Core Web API
+Infrastructure Layer  
+Implements external dependencies and persistence  
+Repository Implementations, Database Context, RabbitMQ Consumers, External Services
 
-• Entity Framework Core
+API Layer  
+Exposes REST endpoints for interacting with the system  
+Controllers, Middleware, Dependency Injection, Request / Response Models
 
-• SQL Server
+🔹 Example – Simple NotificatiExample request:
 
-• RabbitMQ
-
-• Repository Pattern
+{
+"userId": "123",
+"title": "Account Created",
+"message": "Your account has been successfully created."
+}
 
 🔹 Notification Types
 
-1️⃣ Simple Notification
-
+1️⃣ Simple Notification  
 Direct message sent to a user.
 
-2️⃣ Template Notification
-
+2️⃣ Template Notification  
 Uses predefined templates with dynamic parameters for flexible messaging.
 
-🔹 RabbitMQ Workflow
+🔹 Rabbit Workflow
 
-A message is published to RabbitMQ
-The notification service consumes the message
-Business logic processes the notification
-The notification is stored in the database
-This architecture allows the service to remain loosely coupled, scalable, and ready for extensions like Email, SMS, or Push notifications.
+• A message is published to RabbitMQ  
+• The notification service consumes the message  
+• Business logic processes the notification  
+• The notification is stored in the database  
+
+This architecture keeps the service loosely coupled, scalable, and easy to extendture allows the service to remain loosely coupled, scalable, and ready for extensions like Email, SMS, or Push notifications.
