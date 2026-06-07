@@ -1,7 +1,4 @@
 ﻿using Notification.Application.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Notification.Application.Services.Impliments
 {
@@ -10,11 +7,12 @@ namespace Notification.Application.Services.Impliments
         public string Render(string template, Dictionary<string, string> values)
         {
             if (string.IsNullOrEmpty(template)) return string.Empty;
+            if (values == null || values.Count == 0) return template;
 
             var rendered = template;
             foreach (var (key, value) in values)
             {
-                rendered = rendered.Replace($"{{{{{key}}}}}", value);
+                rendered = rendered.Replace($"{{{key}}}", value ?? string.Empty);
             }
 
             return rendered;

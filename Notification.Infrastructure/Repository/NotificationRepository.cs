@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Notification.Domain.Entities;
+using Notification.Domain.Enums;
 using Notification.Domain.Interfaces.Repository;
 using Notification.Infrastructure.NotificationContext;
 using System;
@@ -51,14 +52,13 @@ namespace Notification.Infrastructure.Repository
         }
         public async Task MarkAsReadAsync(Guid id, DateTime readAt)
         {
-            var notification = await _context.UserNotifications
-                  .FirstOrDefaultAsync(x => x.Id == id && x.ReadAt == null);
+            await _context.UserNotifications
+                .Where(x => x.Id == id && x.ReadAt == null)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(n => n.ReadAt, readAt)
+                    .SetProperty(n => n.Status, NotificationStatus.Read));
 
-            if (notification != null)
-            {
-                notification.ReadAt = readAt;
-            }
-        }
+            } 
         public async Task MarkAllAsReadAsync(Guid userId, DateTime readAt)
         {
             var notifications = await _context.UserNotifications
@@ -67,6 +67,7 @@ namespace Notification.Infrastructure.Repository
             foreach (var notification in notifications) 
             {
                 notification.ReadAt = readAt;
+                notification.Status = NotificationStatus.Read;
             }
         }
         public async Task MarkUserNotificationAsReadAsync(Guid userId, DateTime readAt)

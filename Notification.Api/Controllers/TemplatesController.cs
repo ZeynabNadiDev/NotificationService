@@ -17,6 +17,7 @@ namespace Notification.Api.Controllers
         }
 
         [HttpPost]
+        [EndpointSummary("Create a new notification template")]
         public async Task<IActionResult> Create([FromBody] TemplateRequest dto)
         {
             var result = await _templateService.CreateAsync(dto);
@@ -24,6 +25,7 @@ namespace Notification.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [EndpointSummary("Update an existing template by ID")]
         public async Task<IActionResult> Update(Guid id, [FromBody] TemplateRequest dto)
         {
             var result = await _templateService.UpdateAsync(id, dto);
@@ -31,6 +33,7 @@ namespace Notification.Api.Controllers
         }
 
         [HttpGet]
+        [EndpointSummary("Get all notification templates")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _templateService.GetAllAsync();
@@ -38,6 +41,7 @@ namespace Notification.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [EndpointSummary("Get a specific template by its unique ID")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _templateService.GetByIdAsync(id);
@@ -46,6 +50,7 @@ namespace Notification.Api.Controllers
         }
 
         [HttpPatch("{id}/toggle")]
+        [EndpointSummary("Toggle a template's active/inactive status")]
         public async Task<IActionResult> ToggleActive(Guid id)
         {
             await _templateService.ToggleActiveAsync(id);
@@ -53,6 +58,7 @@ namespace Notification.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [EndpointSummary("Delete a template from the system")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _templateService.DeleteAsync(id);

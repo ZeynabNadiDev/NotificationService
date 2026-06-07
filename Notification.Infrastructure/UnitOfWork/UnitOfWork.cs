@@ -12,7 +12,7 @@ namespace Notification.Infrastructure.Repositories
         public INotificationRepository Notifications { get; }
         public INotificationTemplateRepository NotificationTemplates { get; }
 
-        public INotificationRepository UserNotifications => throw new NotImplementedException();
+        public INotificationRepository UserNotifications { get; }
 
         public UnitOfWork(
             NotificationDbContext context,
@@ -22,6 +22,7 @@ namespace Notification.Infrastructure.Repositories
             _context = context;
             Notifications = notificationRepository;
             NotificationTemplates = templateRepository;
+            UserNotifications = notificationRepository;
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

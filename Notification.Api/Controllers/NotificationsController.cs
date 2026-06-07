@@ -16,6 +16,7 @@ namespace Notification.Api.Controllers
             _notificationService = notificationService;
         }
         [HttpPost]
+        [EndpointSummary("Send a new notification")]
         public async Task<IActionResult>Send([FromBody] SendNotificationRequest request)
         {
             var notificationId = await _notificationService.SendNotificationAsync(request);
@@ -23,18 +24,21 @@ namespace Notification.Api.Controllers
         }
 
         [HttpGet("user/{userId}")]
+        [EndpointSummary("Get all notifications for a specific user")]
         public async Task<IActionResult> GetUserNotifications(Guid userId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             var result = await _notificationService.GetUserNotificationsAsync(userId, page, pageSize);
             return Ok(result);
         }
         [HttpGet("user/{userId}/unread-count")]
+        [EndpointSummary("Get the count of unread notifications")]
         public async Task<IActionResult> GetUnreadCount(Guid userId)
         {
             var count = await _notificationService.GetUnreadCountAsync(userId);
             return Ok(new { UnreadCount = count });
         }
         [HttpPut("{id}/read")]
+        [EndpointSummary("Mark a specific notification as read")]
         public async Task<IActionResult> MarkAsRead(Guid id)
         {
             await _notificationService.MarkAsReadAsync(id);
@@ -42,6 +46,7 @@ namespace Notification.Api.Controllers
         }
 
         [HttpPut("user/{userId}/read-all")]
+        [EndpointSummary("Mark all notifications for a user as read")]
         public async Task<IActionResult> MarkAllAsRead(Guid userId)
         {
             await _notificationService.MarkAllAsReadAsync(userId);

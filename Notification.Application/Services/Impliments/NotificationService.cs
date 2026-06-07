@@ -20,8 +20,8 @@ namespace Notification.Application.Services.Impliments
 
         public async Task<Guid> SendNotificationAsync(SendNotificationRequest request)
         {
-            string title = request.Title;
-            string message = request.Message;
+            string? title = request.Title;
+            string? message = request.Message;
 
             if (request.TemplateId.HasValue)
             {
@@ -30,8 +30,10 @@ namespace Notification.Application.Services.Impliments
                 if (template == null)
                     throw new Exception("Notification template not found");
 
-                title = _templateEngine.Render(template.Subject, request.Parameters);
-                message = _templateEngine.Render(template.Body, request.Parameters);
+                var parameters = request.Parameters ?? new Dictionary<string, string>();
+
+                title = _templateEngine.Render(template.Subject, parameters);
+                message = _templateEngine.Render(template.Body, parameters);
             }
             else
             {
@@ -44,8 +46,8 @@ namespace Notification.Application.Services.Impliments
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
                 TemplateId = request.TemplateId,
-                Title = title,
-                Message = message,
+                Title = title!,
+                Message = message!,
                 Channel = request.Channel,
                 Type = request.Type,
                 Status = NotificationStatus.Pending,
