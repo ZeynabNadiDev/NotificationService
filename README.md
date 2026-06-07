@@ -1,128 +1,102 @@
 # Notification Service
 
-A scalable and clean-architecture-based Notification Service built with .NET.  
-This service supports real-time and template-based notifications using RabbitMQ for messaging and follows Repository Pattern with SQL-based persistence.
+A scalable and clean-architecture-based Notification Service built with .NET. This service supports real-time and template-based notifications using RabbitMQ for messaging and follows the Repository Pattern with SQL-based persistence.
 
 ---
 
 ## 🚀 Features
 
-- ✅ Clean Architecture (Domain, Application, Infrastructure, Presentation)
-- ✅ RabbitMQ Integration
-- ✅ Template-based Notifications
-- ✅ Simple (Direct) Notifications
-- ✅ Template Management (CRUD)
-- ✅ Mark Notification as Read
-  - Mark all as read
-  - Mark for a specific user
-- ✅ SQL Database
-- ✅ Repository Pattern
-- ✅ Scalable & Maintainable Design
+- ✅ **Clean Architecture:** Separation of concerns (Domain, Application, Infrastructure, API)
+- ✅ **RabbitMQ Integration:** Asynchronous message processing for high scalability
+- ✅ **Template-based Notifications:** Dynamic messaging with predefined templates
+- ✅ **Simple (Direct) Notifications:** Instant alerts with custom content
+- ✅ **Template Management:** Full CRUD operations for notification templates
+- ✅ **Notification Management:** Mark notifications as read (all or per user)
+- ✅ **SQL Persistence:** Reliable data storage using Entity Framework Core
+- ✅ **Repository Pattern:** Clean abstraction for data access
 
 ---
 
 ## 🏗️ Architecture
 
-The project follows **Clean Architecture** principles:
+The project adheres to Clean Architecture principles to ensure modularity and maintainability:
 
-### Domain Layer
-Contains the core business entities and contracts.
-
-- Entities
-- Enums
-- Value Objects
-- Repository Interfaces
-
-### Application Layer
-Contains application business logic and use cases.
-
-- DTOs
-- Services
-- Interfaces
-- Use Cases
-- Validation
-
-### Infrastructure Layer
-Implements external dependencies and persistence.
-
-- Repository Implementations
-- Database Context
-- RabbitMQ Consumers
-- External Services
-
-### API Layer
-Exposes REST endpoints for interacting with the system.
-
-- Controllers
-- Middleware
-- Dependency Injection
-- Request / Response Models
+*   **Domain Layer:** Core business entities, enums, value objects, and repository interfaces.
+*   **Application Layer:** Application business logic, use cases, DTOs, and validation.
+*   **Infrastructure Layer:** Implementation of external dependencies including Database Context, Repositories, and RabbitMQ Consumers.
+*   **API Layer:** RESTful endpoints, controllers, dependency injection, and middleware.
 
 ---
 
-## Notification Types
+## 📩 Notification Types
 
-### Simple Notification
+### 1. Simple Notification
+Direct notification sent to a specific user.
 
-A direct notification sent to a specific user.
-
-🚀 Notification Service – .NET | Clean Architecture | RabbitMQ
-
-I recently built a scalable Notification Service using .NET, designed with Clean Architecture principles and asynchronous messaging via RabbitMQ.
-
-The goal was to create a flexible system capable of handling both direct notifications and template-based notifications while keeping the architecture modular and maintainable.
-
-🔹 Key Features
-
-• Simple notifications with custom title and message  
-• Template-based notifications with dynamic parameters  
-• Full template management (Create, Update, Delete, Retrieve)  
-• Mark notifications as read (all or per user)  
-• SQL Server persistence using Entity Framework Core  
-• Repository Pattern implementation  
-• RabbitMQ-based message processing  
-
-🔹 Architecture
-
-The service follows a Clean Architecture structure:
-
-Domain Layer  
-Contains the core business entities and contracts  
-Entities, Enums, Value Objects, Repository Interfaces
-
-Application Layer  
-Contains application business logic and use cases  
-DTOs, Services, Interfaces, Use Cases, Validation
-
-Infrastructure Layer  
-Implements external dependencies and persistence  
-Repository Implementations, Database Context, RabbitMQ Consumers, External Services
-
-API Layer  
-Exposes REST endpoints for interacting with the system  
-Controllers, Middleware, Dependency Injection, Request / Response Models
-
-🔹 Example – Simple NotificatiExample request:
-
+```json
 {
-"userId": "123",
-"title": "Account Created",
-"message": "Your account has been successfully created."
+  "userId": "123",
+  "title": "Account Created",
+  "message": "Your account has been successfully created."
 }
+```
 
-🔹 Notification Types
+### 2. Template Notification
+Uses predefined templates with dynamic parameters.
 
-1️⃣ Simple Notification  
-Direct message sent to a user.
+```json
+{
+  "userId": "123",
+  "templateCode": "WELCOME_TEMPLATE",
+  "parameters": {
+    "UserName": "Zeinab"
+  }
+}
+```
 
-2️⃣ Template Notification  
-Uses predefined templates with dynamic parameters for flexible messaging.
+---
 
-🔹 Rabbit Workflow
+## ⚙️ RabbitMQ Workflow
 
-• A message is published to RabbitMQ  
-• The notification service consumes the message  
-• Business logic processes the notification  
-• The notification is stored in the database  
+1.  **Publish:** A notification message is published to the RabbitMQ exchange.
+2.  **Consume:** The Notification Service consumes the message from the queue.
+3.  **Process:** The application layer processes the business logic.
+4.  **Persist:** The notification is stored in the SQL database.
 
-This architecture keeps the service loosely coupled, scalable, and easy to extendture allows the service to remain loosely coupled, scalable, and ready for extensions like Email, SMS, or Push notifications.
+---
+
+## 🛠️ Technology Stack
+
+- **Framework:** .NET 8
+- **API:** ASP.NET Core Web API
+- **ORM:** Entity Framework Core
+- **Database:** SQL Server
+- **Messaging:** RabbitMQ
+- **Design Pattern:** Repository Pattern, Clean Architecture
+
+---
+
+## 🚀 Running the Project
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/ZeynabNadiDev/NotificationService.git
+```
+
+### 2. Configure `appsettings.json`
+Update your connection strings and RabbitMQ credentials.
+
+### 3. Apply Migrations
+```bash
+dotnet ef database update
+```
+
+### 4. Run the Application
+```bash
+dotnet run
+```
+
+---
+
+## 📄 License
+MIT License
