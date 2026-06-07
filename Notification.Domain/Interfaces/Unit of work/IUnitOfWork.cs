@@ -9,6 +9,6 @@ namespace Notification.Domain.Interfaces.Unit_of_work
     {
         INotificationRepository UserNotifications { get; }
         INotificationTemplateRepository NotificationTemplates { get; }
-        Task<int> SaveChangesAsync();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
