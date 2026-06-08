@@ -67,7 +67,7 @@ Uses predefined templates with dynamic parameters.
 
 ## 🛠️ Technology Stack
 
-- **Framework:** .NET 8
+- **Framework:** .NET 10
 - **API:** ASP.NET Core Web API
 - **ORM:** Entity Framework Core
 - **Database:** SQL Server
